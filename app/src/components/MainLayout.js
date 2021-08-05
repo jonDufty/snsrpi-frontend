@@ -1,18 +1,16 @@
-import { Layout, Menu, Breadcrumb } from 'antd';
 import React from 'react';
+import { Layout, Menu, Breadcrumb } from 'antd';
 import {
   DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
+  LineChartOutlined,
+  BarsOutlined,
 } from '@ant-design/icons';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-class SiderDemo extends React.Component {
+class MainLayout extends React.Component {
   state = {
     collapsed: false,
   };
@@ -25,26 +23,26 @@ class SiderDemo extends React.Component {
   render() {
     const { collapsed } = this.state;
     return (
-      
+
       <Layout className="site-layout">
         <Layout style={{ minHeight: '100vh' }}>
           <Header className="site-layout-background" style={{ padding: 0 }} />
           <Router>
-          <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-            <div className="logo" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1" icon={<PieChartOutlined />}>
-                <Link to="/devices">Devices</Link>
-              </Menu.Item>
-              <Menu.Item key="2" icon={<DesktopOutlined />}>
-                <Link to="/config">Configuration</Link>
-              </Menu.Item>
-              <Menu.Item key="3" icon={<FileOutlined />}>
-                <Link to="/monitor">Monitor</Link>
-              </Menu.Item>
-            </Menu>
-          </Sider>
-        </Router>
+            <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+              <div className="logo" />
+              <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                <Menu.Item key="1" icon={<BarsOutlined />}>
+                  <Link to="/devices">Devices</Link>
+                </Menu.Item>
+                <Menu.Item key="2" icon={<DesktopOutlined />}>
+                  <Link to="/config">Configuration</Link>
+                </Menu.Item>
+                <Menu.Item key="3" icon={<LineChartOutlined />}>
+                  <Link to="/monitor">Monitor</Link>
+                </Menu.Item>
+              </Menu>
+            </Sider>
+          </Router>
         </Layout>
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
@@ -61,4 +59,4 @@ class SiderDemo extends React.Component {
   }
 }
 
-export default SiderDemo;
+export default MainLayout;
