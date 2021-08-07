@@ -1,10 +1,8 @@
-name: Node.js CI
+name: Build/Test React App
 
 on:
   push:
-    branches: [ $default-branch ]
   pull_request:
-    branches: [ $default-branch ]
   workflow_dispatch:
 
 jobs:
@@ -19,15 +17,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: cd app
-    - run: pwd
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: app/package-lock.json
-
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
