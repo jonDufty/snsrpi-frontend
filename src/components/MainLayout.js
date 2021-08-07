@@ -1,14 +1,19 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
+import AppHeader from './Header';
 import {
   DesktopOutlined,
   LineChartOutlined,
   BarsOutlined,
 } from '@ant-design/icons';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import DeviceMenu from './DeviceMenu';
+import devices from '../resources/device_list';
 
-const { Header, Content, Footer, Sider } = Layout;
+
+const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+
 
 class MainLayout extends React.Component {
   state = {
@@ -22,17 +27,18 @@ class MainLayout extends React.Component {
 
   render() {
     const { collapsed } = this.state;
+    const device_list = devices;
     return (
 
       <Layout className="site-layout">
+        <AppHeader />
         <Layout style={{ minHeight: '100vh' }}>
-          <Header className="site-layout-background" style={{ padding: 0 }} />
           <Router>
             <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
               <div className="logo" />
               <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                 <Menu.Item key="1" icon={<BarsOutlined />}>
-                  <Link to="/devices">Devices</Link>
+                  <Link to="/settings">Settings</Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<DesktopOutlined />}>
                   <Link to="/config">Configuration</Link>
@@ -43,16 +49,10 @@ class MainLayout extends React.Component {
               </Menu>
             </Sider>
           </Router>
+          <Sider theme="light">
+            <DeviceMenu devices={device_list} />
+          </Sider>
         </Layout>
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-            Bill is not a cat.
-          </div>
-        </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
     );
