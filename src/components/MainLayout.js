@@ -1,14 +1,14 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import AppHeader from './Header';
-import {
-  DesktopOutlined,
-  LineChartOutlined,
-  BarsOutlined,
-} from '@ant-design/icons';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import DeviceMenu from './DeviceMenu';
+import MainMenu from './MainMenu';
 import devices from '../resources/device_list';
+import MenuRouter from '../Router';
+import Config from './Config';
+import Monitor from './Monitor';
 
 
 const { Content, Footer, Sider } = Layout;
@@ -32,28 +32,23 @@ class MainLayout extends React.Component {
 
       <Layout className="site-layout">
         <AppHeader />
+        <Router>
         <Layout style={{ minHeight: '100vh' }}>
-          <Router>
-            <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-              <div className="logo" />
-              <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                <Menu.Item key="1" icon={<BarsOutlined />}>
-                  <Link to="/settings">Settings</Link>
-                </Menu.Item>
-                <Menu.Item key="2" icon={<DesktopOutlined />}>
-                  <Link to="/config">Configuration</Link>
-                </Menu.Item>
-                <Menu.Item key="3" icon={<LineChartOutlined />}>
-                  <Link to="/monitor">Monitor</Link>
-                </Menu.Item>
-              </Menu>
+          <MainMenu onCollapse={this.onCollapse} collapsed={collapsed}></MainMenu>
+          <Layout>
+            <Sider theme="light">
+              <DeviceMenu devices={device_list} />
             </Sider>
-          </Router>
-          <Sider theme="light">
-            <DeviceMenu devices={device_list} />
-          </Sider>
+            <Content style={{ padding: '50px 50px' }}>
+                <Switch>
+                  <Route path='/config' component={Config} />
+                  <Route path='/monitor' component={Monitor} />
+                </Switch>
+            </Content >
+          </Layout>
         </Layout>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        </Router>
+        <Footer style={{ minHeight: '100vh', textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
     );
   }

@@ -8,17 +8,19 @@ const { SubMenu } = Menu;
 const DeviceMenu = ({ devices }) => {
 
   return (
-    <Menu mode='inline'>
-      {devices.map((item) => {
-        return (
-          <SubMenu key={item.name} title={item.name}>
-            {item.devices.map((device, key) => (
-              <Menu.Item key={device.name}>{device.name}</Menu.Item>
-            ))}
-          </SubMenu>
-        );
-      })}
-    </Menu>
+    <Sider>
+      <Menu mode='inline'>
+        {devices.map((item) => {
+          return (
+            <SubMenu key={item.name} title={item.name}>
+              {item.devices.map((device, key) => (
+                <Menu.Item key={device.name}>{device.name}</Menu.Item>
+              ))}
+            </SubMenu>
+          );
+        })}
+      </Menu>
+    </Sider>
   );
 }
 

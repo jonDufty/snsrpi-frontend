@@ -1,4 +1,4 @@
-const config = {
+const ex_config = {
     "sample_rate":500,
     "output_type":"feather",
     "offline_mode":false,
@@ -7,7 +7,7 @@ const config = {
     ],
     "output_directory": "~/data",
     "save_interval":{
-        "unit":"minutes",
+        "unit":"mins",
         "interval":5
     },
     "file_upload":{
@@ -17,4 +17,4 @@ const config = {
     "duration":false
 };
 
-export default config;
+export default ex_config;
