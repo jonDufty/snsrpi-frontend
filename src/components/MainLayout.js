@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import AppHeader from './Header';
 
@@ -15,34 +15,53 @@ const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-class MainLayout extends React.Component {
-  state = {
-    collapsed: false,
+const MainLayout = () => {
+  
+  const [collapsed, setCollapsed] = useState(false)
+  const [device, setDevice] = useState({device:null, sensor:null});
+  var defaultSelect = {
+    menu: null,
+    sub: null
   };
 
-  onCollapse = collapsed => {
+
+  const onCollapse = collapsed => {
     console.log(collapsed);
-    this.setState({ collapsed });
+    setCollapsed(() => (collapsed));
   };
 
-  render() {
-    const { collapsed } = this.state;
-    const device_list = devices;
-    return (
+  const HandleDeviceClick = (e) => {
+    console.log(e.key);
+    const [dev, log] = e.key.split("/");
+    const new_device = {device: dev, sensor: log}
+    setDevice(() => (new_device));
+    defaultSelect.menu = device;
+    defaultSelect.sub = e.key;
+  }
 
+
+  return(
+    
       <Layout className="site-layout">
         <AppHeader />
         <Router>
         <Layout style={{ minHeight: '100vh' }}>
-          <MainMenu onCollapse={this.onCollapse} collapsed={collapsed}></MainMenu>
+          <MainMenu onCollapse={onCollapse} collapsed={collapsed}></MainMenu>
           <Layout>
             <Sider theme="light">
-              <DeviceMenu devices={device_list} />
+              <DeviceMenu handleClick={HandleDeviceClick} />
             </Sider>
             <Content style={{ padding: '50px 50px' }}>
                 <Switch>
-                  <Route path='/config' component={Config} />
-                  <Route path='/monitor' component={Monitor} />
+                  <Route path='/config'>
+                    <Config device={device}/>
+                  </Route>
+                  <Route path='/monitor'>
+                    <Monitor />
+                  </Route>
+                  <Route path='/settings'>
+                    <Monitor />
+                  </Route >
                 </Switch>
             </Content >
           </Layout>
@@ -50,8 +69,7 @@ class MainLayout extends React.Component {
         </Router>
         <Footer style={{ minHeight: '100vh', textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>
-    );
-  }
+  );
 }
 
 export default MainLayout;
