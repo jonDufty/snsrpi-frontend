@@ -1,62 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import {
-  DesktopOutlined,
-  LineChartOutlined,
-  BarsOutlined,
-} from '@ant-design/icons';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import AppHeader from './Header';
 
-const { Header, Content, Footer, Sider } = Layout;
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import DeviceMenu from './DeviceMenu';
+import MainMenu from './MainMenu';
+import devices from '../resources/device_list';
+import MenuRouter from '../Router';
+import Config from './Config';
+import Monitor from './Monitor';
+
+
+const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-class MainLayout extends React.Component {
-  state = {
-    collapsed: false,
+
+const MainLayout = () => {
+  
+  const [collapsed, setCollapsed] = useState(false)
+  const [device, setDevice] = useState({device:null, sensor:null});
+  var defaultSelect = {
+    menu: null,
+    sub: null
   };
 
-  onCollapse = collapsed => {
+
+  const onCollapse = collapsed => {
     console.log(collapsed);
-    this.setState({ collapsed });
+    setCollapsed(() => (collapsed));
   };
 
-  render() {
-    const { collapsed } = this.state;
-    return (
-
-      <Layout className="site-layout">
-        <Layout style={{ minHeight: '100vh' }}>
-          <Header className="site-layout-background" style={{ padding: 0 }} />
-          <Router>
-            <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-              <div className="logo" />
-              <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                <Menu.Item key="1" icon={<BarsOutlined />}>
-                  <Link to="/devices">Devices</Link>
-                </Menu.Item>
-                <Menu.Item key="2" icon={<DesktopOutlined />}>
-                  <Link to="/config">Configuration</Link>
-                </Menu.Item>
-                <Menu.Item key="3" icon={<LineChartOutlined />}>
-                  <Link to="/monitor">Monitor</Link>
-                </Menu.Item>
-              </Menu>
-            </Sider>
-          </Router>
-        </Layout>
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-            Bill is not a cat.
-          </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-      </Layout>
-    );
+  const HandleDeviceClick = (e) => {
+    console.log(e.key);
+    const [dev, log] = e.key.split("/");
+    const new_device = {device: dev, sensor: log}
+    setDevice(() => (new_device));
+    defaultSelect.menu = device;
+    defaultSelect.sub = e.key;
   }
+
+
+  return(
+    
+      <Layout className="site-layout">
+        <AppHeader />
+        <Router>
+        <Layout style={{ minHeight: '100vh' }}>
+          <MainMenu onCollapse={onCollapse} collapsed={collapsed}></MainMenu>
+          <Layout>
+            <Sider theme="light">
+              <DeviceMenu handleClick={HandleDeviceClick} />
+            </Sider>
+            <Content style={{ padding: '50px 50px' }}>
+                <Switch>
+                  <Route path='/config'>
+                    <Config device={device}/>
+                  </Route>
+                  <Route path='/monitor'>
+                    <Monitor />
+                  </Route>
+                  <Route path='/settings'>
+                    <Monitor />
+                  </Route >
+                </Switch>
+            </Content >
+          </Layout>
+        </Layout>
+        </Router>
+        <Footer style={{ minHeight: '100vh', textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      </Layout>
+  );
 }
 
 export default MainLayout;

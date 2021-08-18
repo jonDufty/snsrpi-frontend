@@ -1,12 +1,19 @@
 version: "3.7"
 
 services:
-  app:
-    image: snsrpi-frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
     volumes:
-      - ./app/src:/app/src
+      - ./src:/app/src
     ports:
       - 3000:3000
+    environment:
+      - NODE_ENV=development
+    
+
 
 
     
