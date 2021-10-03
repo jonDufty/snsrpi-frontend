@@ -15,7 +15,8 @@ const samples = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000];
 const output_types = ['csv', 'feather'];
 const time_intervals = { "min": 5, "sec": 120, "hr": 1 };
 
-const base_url = process.env.REACT_APP_BACKEND_API_URL;
+const base_url = process.env.REACT_APP_BACKEND_URL;
+// console.log(`base url = ${base_url}`);
 const ex_device = "rpi-arup-002";
 const sensor = "CX1_1901";
 
@@ -68,6 +69,7 @@ const Config = (props) => {
 
 
   function fetchConfig() {
+    console.log(`fetching data from ${url}`)
     fetch(url)
       .then(response => response.json())
       .then((res) => {

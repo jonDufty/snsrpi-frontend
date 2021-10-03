@@ -1,0 +1,56 @@
+:root {
+    --dot-size: 1rem;
+    --animation-duration: 2s;
+  }
+
+.dot {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    background-color: green;
+    border-radius: 50%;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+
+@keyframes blink {
+0% { opacity: 0; }
+50% { opacity: 1; }
+100% { opacity: 0; }
+}
+
+.dot-active {
+animation: blink 2s infinite;
+}
+
+.div {
+    vertical-align: middle;
+    height: 100px;
+    text-align: center;
+}
+
+
+
+.status-icon {
+    --dot-size: 0.5rem;
+    --offline-color: #999;
+    --offline-text-color: #666;
+    
+    display: inline-flex;
+    align-items: center;
+    padding: .5rem 1rem;
+}
+
+.status-icon .dot-active{
+    margin-right: 0.5rem;
+    margin-left: 0.5rem
+}
+
+.status-icon-offline {
+    color: var(--offline-text-color);
+}
+
+.status-icon-offline .dot{
+    animation: none;
+    background-color: var(--offline-color);
+}

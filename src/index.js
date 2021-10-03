@@ -1,16 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
+// External imports
+import React from 'react'
+import { render } from 'react-dom'
+import { configureStore } from '@reduxjs/toolkit'
+import { Provider } from 'react-redux'
+import reportWebVitals from './reportWebVitals';
+
+// Local imports
+import App from './App'
+import rootReducer from './slices'
+
+// Assets
+import './index.css'
+
+const store = configureStore({ reducer: rootReducer })
+export { store };
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

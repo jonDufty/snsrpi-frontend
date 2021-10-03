@@ -1,13 +1,14 @@
 import './App.css';
-import MainLayout from './components/MainLayout';
-import MenuRouter from './Router';
-import { BrowserRouter as Router } from 'react-router-dom';
 import "antd/dist/antd.css";
 import "./index.css";
+import MainLayout from './components/MainLayout';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   return (
-        <MainLayout />
+    <Router>
+      <MainLayout />
+    </Router>
   );
 }
 

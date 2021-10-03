@@ -17,10 +17,11 @@ const MainMenu = (props) => {
 
     return (
         <Sider collapsible collapsed={props.collapsed} onCollapse={props.onCollapse}>
+            <Router>
             <div className="logo" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" selectedKeys={selected}>
-                <Menu.Item key="settings" icon={<BarsOutlined />} onClick={()=>setSelected('settings')}>
-                    <Link to="/settings">Heidi</Link>
+            <Menu theme="dark" defaultSelectedKeys={['info']} mode="inline" selectedKeys={selected}>
+                <Menu.Item key="info" icon={<BarsOutlined />} onClick={()=>setSelected('info')}>
+                    <Link to="/info">Information</Link>
                 </Menu.Item>
                 <Menu.Item key="config" icon={<DesktopOutlined />} onClick={()=>setSelected('config')}>
                     <Link to="/config">Config</Link>
@@ -29,6 +30,7 @@ const MainMenu = (props) => {
                     <Link to="/monitor">Monitor</Link>
                 </Menu.Item>
             </Menu>
+            </Router>
         </Sider>
     );
 }

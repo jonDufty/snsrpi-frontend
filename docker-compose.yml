@@ -2,16 +2,24 @@ version: "3.7"
 
 services:
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: frontend:latest
     working_dir: /app
     volumes:
       - ./src:/app/src
     ports:
       - 3000:3000
     environment:
-      - NODE_ENV=development
+      NODE_ENV: "development"
+      REACT_APP_BACKEND_URL: "http://backend:8000"
+
+  backend:
+    image: backend:latest
+    ports: 
+      - 8000:8000
+    environment:
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_ACCESS_KEY_ID
+      
     
 
 

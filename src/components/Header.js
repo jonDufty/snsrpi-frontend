@@ -5,7 +5,7 @@ const { Header } = Layout;
 
 function AppHeader(){
     return (
-        <Header className="site-layout-background" style={{ width: '100%' }} />
+        <Header className="site-layout-background" theme="light" style={{ width: '100%' }} />
     );
 }
 
